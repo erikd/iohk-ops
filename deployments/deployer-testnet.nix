@@ -27,6 +27,7 @@ in {
       terraform
       mfa
     ]) ++ (with pkgs; [
+      psmisc
       gnupg
       nixops
       awscli
@@ -51,19 +52,27 @@ in {
         openssh.authorizedKeys.keys = devOpsKeys;
       };
 
-      # Deploy testnet
+      # Deploy cardano-sl testnet
       testnet = {
         isNormalUser = true;
-        description  = "Testnet NixOps Deployer";
+        description  = "Cardano SL Testnet NixOps Deployer";
         group        = "deployers";
         openssh.authorizedKeys.keys = devOpsKeys;
       };
 
-      # Deploy staging network
+      # Deploy cardano-sl staging network
       staging = {
         description  = "Staging NixOps deployer";
         group        = "deployers";
         isNormalUser = true;
+        openssh.authorizedKeys.keys = devOpsKeys;
+      };
+
+      # Deploy mantis (kevm/iele) testnet
+      mantis-testnet = {
+        isNormalUser = true;
+        description  = "Mantis Testnet NixOps Deployer";
+        group        = "deployers";
         openssh.authorizedKeys.keys = devOpsKeys;
       };
 
