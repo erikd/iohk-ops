@@ -73,7 +73,7 @@ in {
         isNormalUser = true;
         description  = "Mantis Testnet NixOps Deployer";
         group        = "deployers";
-        openssh.authorizedKeys.keys = devOpsKeys;
+        openssh.authorizedKeys.keys = mantisOpsKeys;
       };
 
       # Deploy Hydra and agents
@@ -89,7 +89,7 @@ in {
       group = "developers";
       isNormalUser = true;
       openssh.authorizedKeys.keys = keys;
-    }) (developers // devOps);
+    }) (csl-developers // devOps);
 
     deployment.keys.tarsnap = {
       keyFile = ./../static/tarsnap-testnet-deployer.secret;
