@@ -128,12 +128,12 @@ for the testnet IAM user.
     python -c "import secrets; print(secrets.randbelow(2**256))" > testnet-seed2.txt
     python -c "import datetime; print(round(datetime.datetime.utcnow().timestamp()))" > start-time.txt
 
-    cardano-keygen --system-start `cat start-time.txt` --configuration-file cardano-sl/lib/configuration.yaml --configuration-key testnet_gen --configuration-seed `cat testnet-seed.txt` dump-genesis-data --path cardano-sl/lib/testnet-genesis.json
+    cardano-keygen --system-start `cat start-time.txt` --configuration-file cardano-sl/lib/configuration.yaml --configuration-key testnet_launch --configuration-seed `cat testnet-seed.txt` dump-genesis-data --path cardano-sl/lib/testnet-genesis.json
 
-    ./scripts/js/genesis-hash.js lib/testnet-genesis.json
+    genesis-hash cardano-sl/lib/testnet-genesis.json
     # put this hash into cardano-sl/lib/configuration.yaml
 
-    cardano-keygen --system-start 0 --configuration-file cardano-sl/lib/configuration.yaml --configuration-key testnet_gen --configuration-seed `cat testnet-seed2.txt` generate-keys-by-spec --genesis-out-dir genesis-keys
+    cardano-keygen --system-start 0 --configuration-file cardano-sl/lib/configuration.yaml --configuration-key testnet_launch --configuration-seed `cat testnet-seed.txt` generate-keys-by-spec --genesis-out-dir genesis-keys
 
     cp -Rv genesis-keys/generated-keys/rich keys
 
