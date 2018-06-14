@@ -22,7 +22,7 @@ let nodeMap = globals.nodeMap; in
       disk = mkMonitor (disk_monitor "!host:rc-staging.ec2.report-server" "0.8" "0.9" // {
         message = pagerDutyPolicy.nonCritical;
       });
-      inodes = mkMonitor ((inodes_monitor 2 7) // {
+      inodes = mkMonitor ((inodes_monitor 7 2) // {
         message = pagerDutyPolicy.nonCritical;
       });
       ram = mkMonitor (ram_monitor // {
