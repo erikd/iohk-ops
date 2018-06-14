@@ -1,6 +1,6 @@
 { ... }:
 
-with (import ./../lib.nix);
+with (import ../lib.nix);
 
 let
   iohk-pkgs = import ../default.nix {};
@@ -10,48 +10,18 @@ in {
 
   testnet-deployer = { config, pkgs, resources, ... }: {
     imports = [
-      ./../modules/common.nix
-      ./../modules/datadog.nix
-      ./../modules/papertrail.nix
+      ../modules/common.nix
+      ../modules/datadog.nix
+      ../modules/papertrail.nix
+      ../modules/deployer-base.nix
     ];
 
     services.dd-agent.tags = ["env:production" "depl:${config.deployment.name}" "role:deployer"];
-
-    security.sudo.enable = true;
-    security.sudo.wheelNeedsPassword = false;
-
     networking.hostName = "testnet-deployer";
 
-    environment.systemPackages = (with iohk-pkgs; [
-      iohk-ops
-      terraform
-      mfa
-    ]) ++ (with pkgs; [
-      psmisc
-      gnupg
-      nixops
-      awscli
-      jq
-      yq
-      python3
-      htop
-    ]);
+    users.groups.developers = {};
 
-    users.groups = {
-      deployers = {};
-      developers = {};
-    };
     users.users = {
-      # Re-deploy the deployer host itself,
-      # and apply global terraform.
-      deployer = {
-        isNormalUser = true;
-        description  = "Deploy the deployer";
-        group        = "deployers";
-        extraGroups  = [ "wheel" ];
-        openssh.authorizedKeys.keys = devOpsKeys;
-      };
-
       # Deploy cardano-sl testnet
       testnet = {
         isNormalUser = true;
@@ -106,6 +76,5 @@ in {
         ];
       };
     };
-
   };
 }
