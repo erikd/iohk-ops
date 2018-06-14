@@ -101,10 +101,7 @@ in {
       keyfile = "/var/lib/keys/tarsnap";
       archives.testnet-deployer = {
         directories = [
-          # fixme: backups for each user
-          "/home/infra/.ec2-keys"
-          "/home/infra/.aws"
-          "/home/infra/.nixops"
+          "/home"
           "/etc/"
         ];
       };
